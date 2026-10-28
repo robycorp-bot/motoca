@@ -1,0 +1,13 @@
+{
+  "name": "velocity-motoverse",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=24 <25"},
+  "scripts": {
+    "build": "node scripts/check-site.mjs",
+    "start": "node scripts/server.mjs",
+    "preview": "node scripts/server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

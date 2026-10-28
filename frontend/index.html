@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101314">
+  <meta name="description" content="VELOCITY. Explore motos atuais, acompanhe lançamentos nas fontes oficiais e descubra uma nova dimensão para comprar, vender ou trocar sua moto.">
+  <title>VELOCITY® — O asfalto é só o começo.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffd400'/%3E%3Cpath d='M12 15h12l4 32H16zm23 0h16L31 47H19z' fill='%23101314'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="updates.css">
+</head>
+<body>
+  <a class="skip-link" href="#estoque">Ir para as motos</a>
+  <div id="scene" aria-label="Moto esportiva em uma estrada futurista em 3D" role="img"></div>
+  <div class="scene-vignette"></div>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Velocity, início"><span class="brand-symbol"><i></i><i></i></span><span>VELOCITY<span class="registered">®</span></span></a>
+    <nav class="desktop-nav" aria-label="Navegação principal">
+      <a href="#estoque">Encontre sua moto<span>01</span></a>
+      <a href="#lancamentos">Lançamentos<span>02</span></a>
+      <a href="#negocio">A Velocity<span>03</span></a>
+      <a href="#troca">Venda ou troque<span>04</span></a>
+    </nav>
+    <button class="header-cta" data-open="contact">Vamos conversar <span class="arrow">↗</span></button>
+    <button class="menu-toggle icon-button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+  <nav class="mobile-nav" aria-label="Menu móvel" hidden><a href="#estoque">Encontre sua moto ↗</a><a href="#lancamentos">Lançamentos ↗</a><a href="#negocio">Sobre a Velocity ↗</a><a href="#troca">Venda ou troque ↗</a><a href="#universo">Pilote em 3D ↗</a><button data-open="contact">Vamos conversar ↗</button></nav>
+  <main>
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="hero-grid"></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-line"></span> PARA QUEM NASCEU PARA IR ALÉM</p>
+        <h1 id="hero-title">O ASFALTO<br>É SÓ O<br><span>COMEÇO.</span></h1>
+        <p class="hero-description">As motos de agora. A estrada de amanhã.<br>Compra, venda e troca em outra dimensão.</p>
+        <div class="hero-actions"><a class="button button-lime" href="#estoque">Encontre sua moto <span>↗</span></a><button class="ride-trigger"><span class="play-icon">▷</span> Pilote a experiência</button></div>
+        <div class="hero-caption"><span class="mini-cross">+</span> COMPRA. VENDA. TROCA. <span class="muted">SEM FICAR PARADO.</span></div>
+      </div>
+      <div class="world-status"><span class="live-dot"></span> EXPERIÊNCIA 3D EM TEMPO REAL <a class="coordinate" href="#lancamentos">RADAR DE LANÇAMENTOS ↗</a></div>
+      <div class="bike-callout"><span class="callout-line"></span><p>V–09 / STREET CONCEPT</p><span>DESIGN EM MOVIMENTO</span></div>
+      <div class="color-control"><span>ESCOLHA SUA ENERGIA</span><div><button class="swatch active" data-color="#ffd400" style="--swatch:#ffd400" aria-label="Moto amarelo elétrico" aria-pressed="true"></button><button class="swatch" data-color="#e8eceb" style="--swatch:#e8eceb" aria-label="Moto branco glacial" aria-pressed="false"></button><button class="swatch" data-color="#fb6b3b" style="--swatch:#fb6b3b" aria-label="Moto laranja solar" aria-pressed="false"></button></div></div>
+      <div class="hero-bottom"><a class="scroll-cue" href="#estoque"><span>↓</span> ROLE PARA ACELERAR</a><div class="chapter"><span class="chapter-active">01</span><i></i><span>IGNITION</span></div><span class="hero-note">NÃO É SÓ SOBRE O DESTINO.</span></div>
+      <div class="loading-scene"><span></span> PREPARANDO A ESTRADA</div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><div>RIDE YOUR NEXT CHAPTER <b>↗</b> MENOS ROTINA. MAIS ESTRADA. <b>↗</b> RIDE YOUR NEXT CHAPTER <b>↗</b> MENOS ROTINA. MAIS ESTRADA. <b>↗</b></div></div>
+
+    <section class="inventory section-shell" id="estoque" aria-labelledby="inventory-title">
+      <div class="section-top"><p class="eyebrow">01 / ESCOLHA SEU PRÓXIMO MOVIMENTO</p><span class="tiny-label">CURADORIA VELOCITY <span class="live-dot"></span></span></div>
+      <div class="section-heading"><h2 id="inventory-title">O PRESENTE ACELERA.<br><span class="text-muted">VOCÊ ESCOLHE A DIREÇÃO.</span></h2><p>Modelos atuais de marcas que movem o Brasil.<br>Explore fotos e informações dos fabricantes.</p></div>
+      <div class="brand-strip" aria-label="Marcas da vitrine"><span>HONDA</span><span>YAMAHA</span><span>SHINERAY</span><span>ROYAL ENFIELD</span><span>KAWASAKI</span><span>TRIUMPH</span></div>
+      <div class="inventory-toolbar"><div class="filters" role="group" aria-label="Filtrar motos"><button data-filter="all" class="active" aria-pressed="true">Todas <sup id="total-bikes">—</sup></button><button data-filter="urban" aria-pressed="false">Urbanas</button><button data-filter="naked" aria-pressed="false">Naked</button><button data-filter="sport" aria-pressed="false">Esportivas</button><button data-filter="adventure" aria-pressed="false">Adventure</button></div><label class="brand-select"><span>MARCA</span><select id="brand-filter" aria-label="Filtrar por marca"><option value="all">Todas as marcas</option></select></label></div>
+      <div class="catalog-meta"><span class="stock-count" aria-live="polite">CARREGANDO MODELOS</span><label class="catalog-search"><span aria-hidden="true">⌕</span><input id="bike-search" type="search" placeholder="Buscar modelo ou marca" aria-label="Buscar modelo ou marca"></label></div>
+      <div class="bike-grid" id="bike-grid"></div>
+      <div class="stock-footer"><p><span class="small-star">✳</span> Sua próxima história pode começar com uma troca.</p><a class="text-link" href="#troca">Avalie sua moto <span>↗</span></a></div>
+      <p class="demo-note" id="catalog-note">VITRINE DE REFERÊNCIA · Modelos e imagens dos fabricantes. Não representa estoque disponível ou oferta comercial. Consulte condições e disponibilidade.</p>
+    </section>
+
+    <section class="launches section-shell" id="lancamentos" aria-labelledby="launch-title">
+      <div class="section-top"><p class="eyebrow">02 / O MERCADO NÃO PARA</p><span class="tiny-label">DIRETO DOS FABRICANTES ↗</span></div>
+      <div class="section-heading"><h2 id="launch-title">O PRÓXIMO CAPÍTULO.<br><span class="text-muted">ACABOU DE CHEGAR.</span></h2><p>Um radar conectado às publicações oficiais.<br>Novos modelos, novas linhas e novidades.</p></div>
+      <div class="launch-toolbar"><div><span class="api-state" id="api-state">CONSULTANDO FONTES</span><p id="api-freshness" aria-live="polite">Buscando os comunicados mais recentes…</p></div><button class="refresh-launches" id="refresh-launches">Atualizar radar <span>↻</span></button></div>
+      <div class="launch-filters" role="group" aria-label="Filtrar lançamentos por fabricante"><button class="active" data-launch-brand="all" aria-pressed="true">Todas as fontes</button><button data-launch-brand="Honda" aria-pressed="false">Honda</button><button data-launch-brand="Yamaha" aria-pressed="false">Yamaha</button><button data-launch-brand="Shineray" aria-pressed="false">Shineray</button><button data-launch-brand="BMW" aria-pressed="false">BMW Motorrad</button></div>
+      <div class="launch-grid" id="launch-grid" aria-live="polite"><div class="launch-placeholder">Preparando seu radar de novidades.</div></div>
+      <details class="api-sources"><summary>Fontes, datas e atualização <span>+</span></summary><p>O radar reúne publicações das próprias marcas. A data em cada cartão é a publicação original. A consulta é renovada a cada 15 minutos enquanto a página está aberta; o servidor mantém cache por até 15 minutos. Conteúdo em cache ou de referência é identificado. As marcas não possuem vínculo comercial declarado com a Velocity.</p><div id="source-status"></div><a href="/api/launches" target="_blank" rel="noopener">Consultar os dados do radar em JSON ↗</a></details>
+    </section>
+
+    <section class="open-road" id="universo" aria-labelledby="road-title">
+      <div class="road-marker"><span>ALÉM DA VITRINE</span><i></i><span>O CAMINHO É SEU.</span></div>
+      <h2 id="road-title">ALGUMAS ESCOLHAS<br><em>MUDAM A ROTA.</em></h2>
+      <p>Saia do modo automático.<br>Entre na estrada que a gente criou para você.</p>
+      <button class="button button-lime ride-trigger">Entre no modo pilotagem <span>↗</span></button>
+      <span class="road-instruction">ESTRADA 3D INTERATIVA · SEM SAIR DO NAVEGADOR</span>
+    </section>
+
+    <section class="business section-shell" id="negocio" aria-labelledby="business-title">
+      <div class="section-top"><p class="eyebrow">03 / CONHEÇA A VELOCITY</p><span class="tiny-label">UMA NOVA RELAÇÃO COM A ESTRADA</span></div>
+      <div class="business-layout"><div><h2 id="business-title">MOTO É MÁQUINA.<br><span>NEGÓCIO É<br>CONFIANÇA.</span></h2><p class="business-intro">Um espaço para quem quer comprar, vender ou trocar de moto com mais informação em cada decisão.</p><p class="business-description">A Velocity conecta sua pesquisa ao próximo passo: conhecer modelos atuais, acompanhar novidades e organizar o que você procura. Para motos usadas, o estado de conservação, a documentação e o histórico precisam fazer parte da conversa.</p><button class="button button-lime" data-open="contact">Planejar meu próximo passo <span>↗</span></button></div><div class="business-services"><article><span>01 / COMPRA</span><h3>Encontre seu estilo.</h3><p>Explore categorias, cilindradas e fichas oficiais. Salve suas favoritas e prepare um resumo do que você procura.</p></article><article><span>02 / VENDA</span><h3>Sua moto tem história.</h3><p>Organize modelo, ano e quilometragem. Esses dados são o começo de uma conversa sobre avaliação e venda.</p></article><article><span>03 / TROCA</span><h3>Um novo capítulo.</h3><p>Compare seu momento atual com a moto que você deseja. Disponibilidade e condições devem ser confirmadas no atendimento.</p></article></div></div>
+      <div class="business-info"><div><span>ATENDIMENTO E LOCALIZAÇÃO</span><h3>O próximo encontro<br>começa com uma conversa.</h3><p id="business-contact">Endereço, horário e canais oficiais de atendimento ainda não informados pela loja.</p></div><div class="faq"><details><summary>A vitrine mostra motos disponíveis? <span>+</span></summary><p>Esta vitrine apresenta modelos atuais como referência de pesquisa. Ela não é um sistema de estoque. Disponibilidade, preços e condições de cada unidade precisam ser confirmados com a loja.</p></details><details><summary>Como preparo minha moto para avaliação? <span>+</span></summary><p>Tenha marca, modelo, ano e quilometragem em mãos. Na conversa com a loja, apresente fotos atuais e informe o histórico de manutenção e eventuais modificações. A conclusão depende da análise da unidade.</p></details><details><summary>Como os lançamentos são atualizados? <span>+</span></summary><p>O radar consulta publicações oficiais dos fabricantes por uma API do site. Cada notícia mantém sua fonte e sua data original; falhas e conteúdos de referência são identificados.</p></details><details><summary>O formulário envia uma proposta? <span>+</span></summary><p>Por enquanto, o formulário organiza um resumo para copiar ou baixar. Ele não envia seus dados, não confirma reserva e não constitui proposta comercial.</p></details></div></div>
+    </section>
+    <section class="trade section-shell" id="troca" aria-labelledby="trade-title">
+      <div class="section-top"><p class="eyebrow">04 / SUA MOTO É O PONTO DE PARTIDA</p><span class="tiny-label">PRÓXIMA MARCHA ↗</span></div>
+      <div class="trade-layout"><div class="trade-copy"><h2 id="trade-title">TROQUE A MOTO.<br><span>TROQUE O<br>HORIZONTE.</span></h2><p>A moto que trouxe você até aqui pode levar você ainda mais longe. Conte sua história e descubra o próximo capítulo.</p><button class="button button-dark" data-open="trade">Quero vender ou trocar <span>↗</span></button></div><div class="trade-process"><div class="trade-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core"><span class="brand-symbol"><i></i><i></i></span></div><span class="orbit-caption">KEEP MOVING / VELOCITY</span><span class="orbit-cross c1">+</span><span class="orbit-cross c2">+</span></div><ol><li><span>01</span><div><h3>Você conta.</h3><p>Modelo, ano e o momento da sua moto.</p></div><span>↗</span></li><li><span>02</span><div><h3>A gente conecta.</h3><p>Sua moto e as possibilidades do próximo passo.</p></div><span>↗</span></li><li><span>03</span><div><h3>Sua história continua.</h3><p>Venda ou troca. O caminho é você quem escolhe.</p></div><span>↗</span></li></ol></div></div>
+    </section>
+
+    <section class="final-cta section-shell"><p class="eyebrow">SUA PRÓXIMA MOTO ESTÁ EM ALGUM LUGAR.</p><h2>VAMOS ENCONTRAR<br><span>SEU PRÓXIMO</span> <button data-open="contact" aria-label="Conversar sobre meu próximo destino">↗</button><br>DESTINO.</h2><div class="final-bottom"><p>De quem sente a estrada.<br>Para quem quer sentir mais.</p><button class="text-link" data-open="contact">Comece uma conversa <span>↗</span></button></div></section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="#inicio"><span class="brand-symbol"><i></i><i></i></span><span>VELOCITY<span class="registered">®</span></span></a><p>CONCEITO DIGITAL · FEITO PARA SEGUIR EM FRENTE.</p><button class="motion-toggle" aria-pressed="false">Animações: ativadas</button><button class="credits-button" data-open="credits">Créditos</button><a href="#inicio" aria-label="Voltar ao início">↑</a></footer>
+
+  <div class="ride-ui" hidden>
+    <div class="ride-top"><span class="ride-label"><span class="live-dot"></span> VELOCITY / FREE RIDE</span><button class="exit-ride">Sair da pilotagem <span>ESC ×</span></button></div>
+    <div class="ride-intro"><p class="eyebrow">VOCÊ ESTÁ NO CONTROLE</p><h2>A ESTRADA<br>É SUA.</h2></div>
+    <div class="ride-dashboard"><div class="speed-readout"><span id="speed">68</span><div>KM/H<small>SIMULAÇÃO</small></div></div><div class="rpm-track"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="gear"><span>N</span><small>FREE RIDE</small></div></div>
+    <div class="ride-controls"><p><kbd>←</kbd><kbd>→</kbd> OU MOVA O CURSOR PARA GUIAR</p><button class="boost-button">SEGURE PARA ACELERAR <span>↑ / ESPAÇO</span></button></div>
+    <p class="mobile-ride-hint">DESLIZE PARA GUIAR</p>
+  </div>
+  <dialog id="details-dialog" class="details-dialog" aria-label="Detalhes da moto"><button class="dialog-close icon-button" aria-label="Fechar detalhes">×</button><div id="details-content"></div></dialog>
+  <dialog id="lead-dialog" class="lead-dialog" aria-label="Planeje sua próxima moto"><button class="dialog-close icon-button" aria-label="Fechar formulário">×</button><div id="lead-content"></div></dialog>
+  <div class="toast" role="status"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
