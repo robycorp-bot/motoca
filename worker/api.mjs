@@ -3,7 +3,7 @@ export const CACHE_TTL_SECONDS = 900;
 export const SOURCES = [
   {brand:'Honda',url:'https://cmssaladeimprensa.honda.com.br/api/releases?items_per_page=50',pageUrl:'https://saladeimprensa.honda.com.br/motocicletas',baseUrl:'https://saladeimprensa.honda.com.br',type:'honda-json',domains:['saladeimprensa.honda.com.br'],imageDomains:['cmssaladeimprensa.honda.com.br','saladeimprensa.honda.com.br']},
   {brand:'Yamaha',url:'https://www.yamaha-motor.com.br/api/blog',pageUrl:'https://www.yamaha-motor.com.br/noticias',type:'yamaha',method:'POST',body:{limit:24,offset:0,enabled:true},domains:['www.yamaha-motor.com.br','yamaha-motor.com.br'],imageDomains:['stgmkpprd.blob.core.windows.net','www.yamaha-motor.com.br']},
-  {brand:'Shineray',url:'https://www.shineray.com.br/wp-json/wp/v2/posts?per_page=12&_embed',pageUrl:'https://www.shineray.com.br/noticias/',type:'wordpress',domains:['www.shineray.com.br','shineray.com.br'],imageDomains:['www.shineray.com.br','shineray.com.br']},
+  {brand:'Shineray',url:'https://www.shineray.com.br/wp-json/wp/v2/posts?per_page=12&_embed',fallbackUrl:'https://www.shineray.com.br/feed/',pageUrl:'https://www.shineray.com.br/noticias/',type:'wordpress',domains:['www.shineray.com.br','shineray.com.br'],imageDomains:['www.shineray.com.br','shineray.com.br']},
   {brand:'BMW',url:'https://www.press.bmwgroup.com/brazil/rss',pageUrl:'https://www.press.bmwgroup.com/brazil',type:'rss',domains:['www.press.bmwgroup.com'],imageDomains:['www.press.bmwgroup.com','mediapool.bmwgroup.com']}
 ];
 
@@ -73,15 +73,23 @@ export function parseRss(xml,source=SOURCES[3],now=new Date()){
   }).filter(Boolean));
 }
 function deduplicate(items){return [...new Map(items.map(item=>[item.url,item])).values()].sort((a,b)=>b.date.localeCompare(a.date));}
-async function fetchSource(source,fetcher,now){
-  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),8000);
+async function fetchEndpoint(source,fetcher,now,timeout=8000){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeout);
   try{
     const response=await fetcher(source.url,{method:source.method??'GET',...(source.body?{body:JSON.stringify(source.body)}:{}),headers:{'accept':['wordpress','honda-json','yamaha'].includes(source.type)?'application/json':'text/html, application/rss+xml, application/xml;q=0.9',...(source.body?{'content-type':'application/json'}:{})},signal:controller.signal,redirect:'follow'});
-    if(!response.ok)throw new Error('Upstream unavailable');
+    if(!response.ok)throw new Error(`Upstream returned HTTP ${response.status}`);
     const body=await response.text();if(body.length>3000000)throw new Error('Response too large');
     const items=source.type==='wordpress'?parseWordpress(JSON.parse(body),source,now):source.type==='honda-json'?parseHondaJson(JSON.parse(body),source,now):source.type==='yamaha'?parseYamaha(JSON.parse(body),source,now):source.type==='honda'?parseHonda(body,source,now):parseRss(body,source,now);
     if(!items.length)throw new Error('No valid launches in this source');return items.slice(0,14);
   }finally{clearTimeout(timer);}
+}
+async function fetchSource(source,fetcher,now){
+  try{return {items:await fetchEndpoint(source,fetcher,now,source.fallbackUrl?4000:8000),endpoint:source.url};}
+  catch(error){
+    if(!source.fallbackUrl)throw error;
+    const alternate={...source,url:source.fallbackUrl,type:'rss'};
+    return {items:await fetchEndpoint(alternate,fetcher,now,5000),endpoint:alternate.url};
+  }
 }
 export function createLaunchService({snapshot={items:[],verifiedAt:null},fetcher=fetch,now=()=>new Date(),sources=SOURCES}={}){
   let memory=null,pending=null;
@@ -90,10 +98,10 @@ export function createLaunchService({snapshot={items:[],verifiedAt:null},fetcher
     const results=await Promise.allSettled(sources.map(source=>fetchSource(source,fetcher,checked)));
     const items=[],states=[];
     results.forEach((result,index)=>{
-      const source=sources[index];let data,status;
-      if(result.status==='fulfilled'){data=result.value;status='live';}
+      const source=sources[index];let data,status,endpoint=source.url;
+      if(result.status==='fulfilled'){data=result.value.items;endpoint=result.value.endpoint;status='live';}
       else{data=(snapshot.items??[]).filter(item=>item.brand===source.brand).map(item=>normalizeItem(item,source,checked)).filter(Boolean);status=data.length?'fallback':'error';}
-      items.push(...data);states.push({brand:source.brand,url:source.pageUrl??source.url,endpoint:source.url,status,checkedAt,itemCount:data.length,...(status==='fallback'?{verifiedAt:snapshot.verifiedAt??null}:{}),...(status==='error'?{message:'A fonte oficial não retornou lançamentos válidos nesta consulta.'}:{})});
+      items.push(...data);states.push({brand:source.brand,url:source.pageUrl??source.url,endpoint,status,checkedAt,itemCount:data.length,...(status==='fallback'?{verifiedAt:snapshot.verifiedAt??null}:{}),...(status==='error'?{message:'A fonte oficial não retornou lançamentos válidos nesta consulta.'}:{})});
     });
     const live=states.filter(s=>s.status==='live').length,status=live===sources.length?'live':live?'partial':'fallback';
     const payload={items:deduplicate(items).slice(0,36),fetchedAt:checkedAt,cacheTtlSeconds:CACHE_TTL_SECONDS,sources:states,status,notice:status==='live'?'Consulta concluída nas fontes oficiais. As datas exibidas são as datas dos comunicados.':status==='partial'?'Algumas fontes estão indisponíveis. Quando indicado, exibimos a última seleção verificada.':'As fontes estão indisponíveis nesta consulta. Exibimos somente a última seleção verificada, quando disponível.'};

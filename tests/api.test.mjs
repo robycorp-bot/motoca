@@ -33,3 +33,10 @@ test('partial upstream failure keeps successful records and labels each source a
   const response=await service.fetch(new Request('https://site.example/api/launches?brand=honda'));const payload=await response.json();assert.equal(payload.status,'partial');assert.equal(payload.items.length,1);assert.equal(payload.items[0].brand,'Honda');assert.deepEqual(payload.sources.map(s=>s.status),['live','fallback']);
   const head=await service.fetch(new Request('https://site.example/api/launches',{method:'HEAD'}));assert.equal(head.status,200);assert.equal(await head.text(),'');
 });
+
+test('Shineray can use its current official RSS when the WordPress API is unavailable',async()=>{
+  const calls=[],source=SOURCES[2];
+  const service=createLaunchService({now:()=>now,sources:[source],fetcher:async url=>{calls.push(url);if(url===source.url)return new Response('Unavailable',{status:403});return new Response('<rss><channel><item><title>Shineray apresenta nova SBM 500T</title><link>https://www.shineray.com.br/sbm-500t/</link><pubDate>Wed, 26 Aug 2026 12:00:00 +0000</pubDate></item></channel></rss>');}});
+  const response=await service.fetch(new Request('https://site.example/api/launches'));const payload=await response.json();
+  assert.equal(payload.status,'live');assert.equal(payload.sources[0].status,'live');assert.equal(payload.sources[0].endpoint,source.fallbackUrl);assert.equal(payload.items[0].brand,'Shineray');assert.deepEqual(calls,[source.url,source.fallbackUrl]);
+});
